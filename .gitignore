@@ -1,0 +1,6 @@
+data/
+config/
+classes/
+*.csv
+*.xlsx
+TODO.md
