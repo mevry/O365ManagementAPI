@@ -37,6 +37,7 @@ function Get-O365ManagementAvailableContent{
         $contentBlob
     }
     if($response.Headers['NextPageUri']){
+        Write-Verbose "Paging: $($response.Headers['NextPageUri'])"
         Start-O365ManagementSearch -Uri $response.Header['NextPageUri']
     }
 }
