@@ -9,7 +9,7 @@
 @{
 
 # Script module or binary module file associated with this manifest.
-# RootModule = ''
+RootModule = 'O365ManagementApi.psm1'
 
 # Version number of this module.
 ModuleVersion = '0.0.1'
@@ -69,7 +69,15 @@ Copyright = '(c) Derek Miller. All rights reserved.'
 # NestedModules = @()
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = @()
+FunctionsToExport = @(
+    "Connect-O365ManagementApi",
+    "Disconnect-O365ManagementApi",
+    "Get-O365ManagementContent",
+    "Get-O365ManagementSubscriptions",
+    "Start-O365ManagementSearch",
+    "Start-O365ManagementSubscription",
+    "Stop-O365ManagementSubscription"
+)
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
 CmdletsToExport = @()
