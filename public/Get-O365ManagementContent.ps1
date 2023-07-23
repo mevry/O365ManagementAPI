@@ -1,17 +1,21 @@
 function Get-O365ManagementContent{
     [cmdletbinding()]
     param(
-        [parameter(Mandatory)]
+
+        [parameter(Mandatory, ParameterSetName="ContentUri", ValueFromPipelineByPropertyName)]
         [string]$ContentUri
     )
-
-    $requestSplat = @{
-        uri = $ContentUri
-        method = 'GET'
-        headers = @{
-            Authorization = "Bearer $access_token"
+    Begin{}
+    Process{
+        $requestSplat = @{
+            uri = $ContentUri
+            method = 'GET'
+            headers = @{
+                Authorization = "Bearer $access_token"
+            }
         }
+        #$requestSplat['uri']
+        (Invoke-WebRequest @requestSplat).Content | ConvertFrom-Json
     }
-    #(Invoke-WebRequest @requestSplat).Content | ConvertFrom-Json
-    Invoke-WebRequest @requestSplat
+    End{}
 }
