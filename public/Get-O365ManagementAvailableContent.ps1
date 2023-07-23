@@ -1,4 +1,4 @@
-function Start-O365ManagementSearch{
+function Get-O365ManagementAvailableContent{
     [cmdletbinding()]
     param(
         [parameter(Mandatory, ParameterSetName="Default")]
