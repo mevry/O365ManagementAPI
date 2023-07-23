@@ -72,9 +72,9 @@ Copyright = '(c) Derek Miller. All rights reserved.'
 FunctionsToExport = @(
     "Connect-O365ManagementApi",
     "Disconnect-O365ManagementApi",
+    "Get-O365ManagementAvailableContent",
     "Get-O365ManagementContent",
     "Get-O365ManagementSubscriptions",
-    "Start-O365ManagementSearch",
     "Start-O365ManagementSubscription",
     "Stop-O365ManagementSubscription"
 )
