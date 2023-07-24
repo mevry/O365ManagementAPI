@@ -11,9 +11,15 @@ function Get-O365ManagementAvailableContent{
         [Parameter(ParameterSetName="Uri")]
         [string]$Uri
     )
-
+    function Test-SubscriptionEnabled {
+        param($ContentType)
+        (Get-O365ManagementSubscriptions | Where-Object {$_.ContentType -eq $ContentType}).status -eq "enabled"
+    }
     #Check if subscription is enabled.
-    if(-not (Get-O365ManagementSubscriptions | Where-Object {$_.ContentType -eq $ContentType}).status -eq "enabled"){
+    if(
+        ($PSCmdlet.ParameterSetName -ne "Uri") `
+        -and -not (Test-SubscriptionEnabled -ContentType $ContentType)
+    ){
         throw "$ContentType not enabled. Use 'Start-O365ManagementSubscription -ContentType $ContentType' to enable."
     }
     
@@ -38,6 +44,9 @@ function Get-O365ManagementAvailableContent{
     }
     if($response.Headers['NextPageUri']){
         Write-Verbose "Paging: $($response.Headers['NextPageUri'])"
-        Start-O365ManagementSearch -Uri $response.Header['NextPageUri']
+        #PowerShell throwing error when referencing NextPageUri directly in -Uri parameter
+        #Using variable and casting as string as workaround
+        $nextPageUri = $response.Headers['NextPageUri']
+        Get-O365ManagementAvailableContent -Uri ([string]$nextPageUri)
     }
 }
