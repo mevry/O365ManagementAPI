@@ -3,4 +3,5 @@ config/
 classes/
 *.csv
 *.xlsx
+*.json
 TODO.md
