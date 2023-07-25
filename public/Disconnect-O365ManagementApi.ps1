@@ -2,9 +2,9 @@ function Disconnect-O365ManagementApi {
     [cmdletbinding()]
     param()
 
-    Remove-Variable Global:tenantId
-    Remove-Variable Global:appId
-    Remove-Variable Global:access_token
-    Remove-Variable Global:publisherIdentifer
+    Remove-Variable -Scope Global -Name tenantId
+    Remove-Variable -Scope Global -Name appId
+    Remove-Variable -Scope Global -Name access_token
+    Remove-Variable -Scope Global -Name publisherIdentifer
 
 }
