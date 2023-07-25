@@ -11,10 +11,27 @@ function Get-O365ManagementAvailableContent{
         [Parameter(ParameterSetName="Uri")]
         [string]$Uri
     )
+    $dateDiff = $EndDateTime - $StartDateTime
+    if ($dateDiff -lt 0) {throw "StartDateTime must be before EndDateTime."}
+
+    #The API requires no larger than a 24 hour window be specified
+    #Running two Get-Dates can result in a time that is greater than 24 hours
+    #if you use the DateTime Add methods.
+    #This shifts the STARTDATETIME forward within that window.
+    $oneDayLimit = New-TimeSpan -Days 1
+    if ($dateDiff -gt $oneDayLimit){
+        $timeShift = $dateDiff - $oneDayLimit
+        if($timeShift -gt (New-TimeSpan -Seconds 1)){
+            Write-Host -ForegroundColor Yellow "[WARN] " -NoNewline; Write-Host "Specified interval is greater than the maximum of 24 hours. Shifting StartDateTime forward $timeShift."
+        }
+        $StartDateTime = $StartDateTime + $timeShift
+    }
+
     function Test-SubscriptionEnabled {
         param($ContentType)
         (Get-O365ManagementSubscriptions | Where-Object {$_.ContentType -eq $ContentType}).status -eq "enabled"
     }
+
     #Check if subscription is enabled.
     if(
         ($PSCmdlet.ParameterSetName -ne "Uri") `
