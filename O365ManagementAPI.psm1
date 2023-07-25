@@ -1,3 +1,5 @@
+using module ".\classes\ContentBlob.psm1"
+
 #List of files to be dot sourced.
 $dotSource = Get-ChildItem -Include "*.ps1" -Recurse -Path @("$PSScriptRoot\private","$PSScriptRoot\public")
 
