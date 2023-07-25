@@ -1,6 +1,5 @@
 data/
 config/
-classes/
 *.csv
 *.xlsx
 *.json
